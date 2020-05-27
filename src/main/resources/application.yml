@@ -1,0 +1,12 @@
+spring:
+  main:
+    banner-mode: "off"
+logging:
+  pattern:
+    console:
+  level:
+    org:
+      apache: ERROR
+
+org:
+  apache:
