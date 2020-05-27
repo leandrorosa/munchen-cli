@@ -6,6 +6,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.jsoup.Jsoup;
 import picocli.CommandLine;
 
 import java.nio.charset.StandardCharsets;
@@ -30,10 +31,12 @@ public class MunchenService implements Callable<Integer> {
         var response = client.execute(httpPost);
 
         var result = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-        if(!result.contains("liegt noch nicht zur Abholung bereit")) {
-            System.out.println("Founded, go to KVR right now!");
-        } else {
+        System.out.println(Jsoup.parse(result).text());
+        if(result.contains("liegt noch nicht zur Abholung bereit")) {
             System.out.println("Not this time, try again tomorrow");
+
+        } else {
+            System.out.println("Founded, go to KVR right now!");
         }
         return 0;
     }
